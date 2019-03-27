@@ -1,4 +1,4 @@
-# zcashwallet-docker-vnc
+# bitcoinwallet-gui-docker
 
 This is an docker for Zcash Wallet inside an docker with xfce gui, I made this with the objective of dont have 20 or 30 gigs in my pc by an wallet so i put it on my server.
 
@@ -13,7 +13,7 @@ To use this docker image you need to have docker installed.
 This will download the image to your pc
 
 ```
-docker pull ulisses1478/zcashwallet
+docker pull ulisses1478/bitcoinwallet-gui
 ```
 
 ## To Run
@@ -21,29 +21,29 @@ docker pull ulisses1478/zcashwallet
 This will make the container start with vnc only
 
 ```
-docker run -d -p 5901:5901 ulisses1478/zcashwallet 
+docker run -d -p 5901:5901 ulisses1478/bitcoinwallet-gui 
 ```
 or
 
 If you want the NoVnc
 
 ```
-docker run -d -p 6901:6901 ulisses1478/zcashwallet
+docker run -d -p 6901:6901 ulisses1478/bitcoinwallet-gui
 ```
 or BOTH
 
 ```
-docker run -d -p 5901:5901 -p 6901:6901 ulisses1478/zcashwallet
+docker run -d -p 5901:5901 -p 6901:6901 ulisses1478/bitcoinwallet-gui
 ```
 
 If you want to put the files of the zcashwallet outside the container 
 ```
-docker run -d -p 5901:5901 ulisses1478/zcashwallet
+docker run -d -p 5901:5901 ulisses1478/bitcoinwallet-gui
 ```
 ## RUNNING ZCASH 
 To run zcash you need to open the terminal inside the vnc and run 
 ```
-zcashd --daemon
+bitcoin-qt
 ```
 After that just open the Zcashwallet on the desktop and will start to sync with blockchain
 

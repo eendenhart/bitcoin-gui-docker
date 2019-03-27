@@ -48,9 +48,6 @@ RUN $INST_SCRIPTS/install_custom_fonts.sh
 RUN $INST_SCRIPTS/tigervnc.sh
 RUN $INST_SCRIPTS/no_vnc.sh
 
-### Install Zcash
-RUN $INST_SCRIPTS/zcashwallet.sh
-
 ### Install xfce UI
 RUN $INST_SCRIPTS/xfce_ui.sh
 ADD ./src/common/xfce/ $HOME/
@@ -59,6 +56,7 @@ ADD ./src/common/xfce/ $HOME/
 RUN $INST_SCRIPTS/libnss_wrapper.shn
 ADD ./src/common/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
+
 ### Install bitcoin gui wallet
 RUN apt-add-repository ppa:bitcoin/bitcoin && apt-get install bitcoin-qt
 
