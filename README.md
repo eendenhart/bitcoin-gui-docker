@@ -1,6 +1,6 @@
 # bitcoinwallet-gui-docker
 
-This is an docker for Zcash Wallet inside an docker with xfce gui, I made this with the objective of dont have 20 or 30 gigs in my pc by an wallet so i put it on my server.
+This is an docker for BITCOIN Wallet inside an docker with xfce gui, I made this with the objective of dont have 120+ gigs in my pc so i put it on my server.
 
 This image is based on 
 https://hub.docker.com/r/consol/ubuntu-xfce-vnc/
@@ -36,16 +36,13 @@ or BOTH
 docker run -d -p 5901:5901 -p 6901:6901 ulisses1478/bitcoinwallet-gui
 ```
 
-If you want to put the files of the zcashwallet outside the container 
+If you want to put the files of the bitcoinwallet-gui outside the container 
 ```
 docker run -d -p 5901:5901 ulisses1478/bitcoinwallet-gui
 ```
-## RUNNING ZCASH 
-To run zcash you need to open the terminal inside the vnc and run 
-```
-bitcoin-qt
-```
-After that just open the Zcashwallet on the desktop and will start to sync with blockchain
+## RUNNING bitcoin-gui
+
+You just need to run the desktop bitcoinwallet app
 
 ## Costumize the background image 
 
