@@ -66,5 +66,5 @@ RUN apt-get install -y parallel
 
 USER 0
 
-ENTRYPOINT parallel ::: /dockerstartup/vnc_startup.sh
-CMD bitcoinqt
+ENTRYPOINT parallel ::: /dockerstartup/vnc_startup.sh bitcoin-qt
+CMD bitcoin-qt
