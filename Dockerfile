@@ -32,6 +32,7 @@ ENV HOME=/headless \
     VNC_VIEW_ONLY=false
 WORKDIR $HOME
 
+RUN apt-get update && apt-get install software-properties-common -y
 ### Add all install scripts for further steps
 ADD ./src/common/install/ $INST_SCRIPTS/
 ADD ./src/ubuntu/install/ $INST_SCRIPTS/
@@ -53,12 +54,12 @@ RUN $INST_SCRIPTS/xfce_ui.sh
 ADD ./src/common/xfce/ $HOME/
 
 ### configure startup
-RUN $INST_SCRIPTS/libnss_wrapper.shn
+RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./src/common/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
 
 ### Install bitcoin gui wallet
-RUN apt-add-repository ppa:bitcoin/bitcoin && apt-get install bitcoin-qt
+RUN apt-add-repository ppa:bitcoin/bitcoin && apt-get update && apt-get install bitcoin-qt -y
 
 ### parallel install
 RUN apt-get install -y parallel
