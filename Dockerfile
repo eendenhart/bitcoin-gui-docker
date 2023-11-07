@@ -1,14 +1,14 @@
 # This Dockerfile is used to build an headles vnc image based on Ubuntu
 
-FROM ubuntu:16.04
+FROM debian:11
 
 MAINTAINER Simon Hofmann "simon.hofmann@consol.de"
 ENV REFRESHED_AT 2018-10-29
 
 LABEL io.k8s.description="Headless VNC Container with Xfce window manager, firefox and chromium" \
-      io.k8s.display-name="Headless VNC Container based on Ubuntu" \
+      io.k8s.display-name="Headless VNC Container based on Debian" \
       io.openshift.expose-services="6901:http,5901:xvnc" \
-      io.openshift.tags="vnc, ubuntu, xfce" \
+      io.openshift.tags="vnc, debian, xfce" \
       io.openshift.non-scalable=true
 
 ## Connection ports for controlling the UI:
@@ -32,11 +32,9 @@ ENV HOME=/headless \
     VNC_VIEW_ONLY=false
 WORKDIR $HOME
 
-RUN apt-get update && apt-get install software-properties-common -y
 ### Add all install scripts for further steps
 ADD ./src/common/install/ $INST_SCRIPTS/
-ADD ./src/ubuntu/install/ $INST_SCRIPTS/
-RUN find $INST_SCRIPTS -name '*.sh' -exec chmod a+x {} +
+ADD ./src/debian/install/ $INST_SCRIPTS/
 
 ### Install some common tools
 RUN $INST_SCRIPTS/tools.sh
@@ -49,6 +47,10 @@ RUN $INST_SCRIPTS/install_custom_fonts.sh
 RUN $INST_SCRIPTS/tigervnc.sh
 RUN $INST_SCRIPTS/no_vnc.sh
 
+### Install firefox and chrome browser
+RUN $INST_SCRIPTS/firefox.sh
+RUN $INST_SCRIPTS/chrome.sh
+
 ### Install xfce UI
 RUN $INST_SCRIPTS/xfce_ui.sh
 ADD ./src/common/xfce/ $HOME/
@@ -58,13 +60,10 @@ RUN $INST_SCRIPTS/libnss_wrapper.sh
 ADD ./src/common/scripts $STARTUPDIR
 RUN $INST_SCRIPTS/set_user_permission.sh $STARTUPDIR $HOME
 
-### Install bitcoin gui wallet
-RUN apt-add-repository ppa:bitcoin/bitcoin && apt-get update && apt-get install bitcoin-qt -y
+### Install snpad
+RUN apt-get install -y snap snapd
 
-### parallel install
-RUN apt-get install -y parallel
+USER 1000
 
-USER 0
-
-ENTRYPOINT parallel ::: /dockerstartup/vnc_startup.sh bitcoin-qt
-CMD bitcoin-qt
+ENTRYPOINT ["/dockerstartup/vnc_startup.sh"]
+CMD ["--wait"]
